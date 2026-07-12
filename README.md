@@ -1,238 +1,55 @@
-# Smart Mobility Demand Prediction 🚖
+# Smart Ride AI Dashboard 🚕
 
-## Project Overview
+An interactive Machine Learning web application and operational forecasting tool for smart mobility and taxi fleet management. This project utilizes historical ride data and an XGBoost prediction engine to forecast taxi demand, recommend dynamic surge pricing, and intelligently allocate vehicle fleet mixes across different zones in Dubai.
 
-This project predicts **Taxi Demand** using machine learning.
+## Features
 
-The goal is to help ride-hailing companies, taxi operators, and city planners anticipate transportation demand based on:
+- **Demand Forecasting:** Predicts exact outbound ride demand for 20 distinct zones across Dubai (e.g., Downtown Dubai, JLT, Business Bay) using an XGBRegressor model.
+- **Dynamic Surge Recommendations:** Automatically suggests surge pricing multipliers based on anticipated demand tiers.
+- **Fleet Allocation Engine:** Intelligently splits the required fleet into Standard Sedans, Premium SUVs, and Luxury VIP vehicles based on the predicted volume.
+- **Interactive 3D Map (PyDeck):** Visualizes zone locations with a fully interactive map that smoothly transitions when a new zone is selected. 
+- **7-Day Trend Analysis:** Projects demand for the upcoming week at the specified hour to assist in long-term fleet planning.
+- **Beautiful UI:** A modern, glassmorphic UI built with Streamlit and custom CSS for smooth animations and hover interactions.
 
-* Location
-* Weather
-* Events
-* Vehicle type
-* Customer behavior
-* Temporal features
+## Project Structure
 
-The model is trained using the **Smart Mobility Dataset** and uses **XGBoost Regressor** to forecast taxi demand.
+- `streamlit_app.py`: The main Streamlit web application providing the interactive dashboard.
+- `Smart Mobility.py`: A command-line script for training the model, evaluating performance (R2 Score), and running interactive terminal-based predictions.
 
----
+## Installation & Setup
 
-# Business Problem
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/your-username/smart-mobility.git
+   cd smart-mobility
+   ```
 
-Predicting taxi demand accurately can help:
+2. **Install dependencies:**
+   Make sure you have Python installed, then install the required packages:
+   ```bash
+   pip install pandas numpy scikit-learn xgboost streamlit pydeck plotly
+   ```
 
-* Reduce passenger waiting times
-* Improve fleet allocation
-* Optimize driver deployment
-* Improve traffic management
-* Support smart city initiatives
+3. **Run the Streamlit Dashboard:**
+   ```bash
+   streamlit run streamlit_app.py
+   ```
 
----
+4. **Run the Command Line Interface (CLI):**
+   If you prefer to run predictions via the terminal:
+   ```bash
+   python "Smart Mobility.py"
+   ```
 
-# Dataset Information
+## Technologies Used
+- **Python** for core logic
+- **XGBoost & Scikit-Learn** for Machine Learning
+- **Streamlit** for the web application UI
+- **PyDeck & Plotly** for interactive data visualization
+- **Pandas & NumPy** for data manipulation
 
-Dataset: `Smart_Mobility_1M_Cleaned.csv`
-
-Target Variable:
-
-```text
-Taxi_Demand
-```
-
-Dataset Size:
-
-```text
-1,000,000+ Records
-```
-
----
-
-# Feature Engineering
-
-## Date Processing
-
-The Date column is converted into datetime format:
-
-```python
-df['Date'] = pd.to_datetime(df['Date'], dayfirst=True)
-```
-
-Extracted Features:
-
-* Day
-* WeekOfYear
-
-```python
-df['Day'] = df['Date'].dt.day
-df['WeekOfYear'] = df['Date'].dt.isocalendar().week.astype(int)
-```
-
-Removed:
-
-```python
-Date
-Time
-```
+## Preview
+*(Add a screenshot of your beautiful dashboard here!)*
 
 ---
-
-# Data Leakage Prevention
-
-The following columns were removed because they reveal information about demand after it occurs.
-
-```python
-Ride_Request_Count
-Surge_Multiplier
-Dynamic_Pricing_Activated
-Cancelled_Rides
-```
-
-These features would artificially inflate model performance and would not be available during real-world prediction.
-
----
-
-# Categorical Encoding
-
-One-Hot Encoding was applied to:
-
-* Pickup_Zone
-* Dropoff_Zone
-* Road_Name
-* Weather
-* Event_Type
-* Vehicle_Type
-* Payment_Type
-* Trip_Type
-* Day_Type
-* Customer_Loyalty_Level
-
-```python
-pd.get_dummies(..., drop_first=True)
-```
-
----
-
-# Model
-
-Algorithm Used:
-
-```text
-XGBoost Regressor
-```
-
-Why XGBoost?
-
-* Handles large datasets efficiently
-* Captures non-linear relationships
-* Handles mixed feature types
-* State-of-the-art performance on tabular data
-
----
-
-# Train-Test Split
-
-```python
-80% Training Data
-20% Testing Data
-```
-
-```python
-random_state = 42
-```
-
----
-
-# Evaluation Metrics
-
-Metric Used:
-
-```text
-R² Score
-```
-
-Formula:
-
-R² measures how much variance in Taxi Demand is explained by the model.
-
-```text
-1.0 = Perfect Model
-0.0 = Same as predicting mean
-<0 = Worse than predicting mean
-```
-
----
-
-# Output
-============================================================
-           SMART RIDE AI RESULT CARD
-============================================================
-Predicted Taxi Demand     : 253.07
-Actual Taxi Demand        : 257
-Demand Category           : PEAK
-Recommended Surge Pricing : 2.0x
-------------------------------------------------------------
-Recommended Fleet Allocation
-------------------------------------------------------------
-Sedan Drivers : 126
-SUV Drivers : 75
-Luxury Drivers : 50
-============================================================
-MODEL PERFORMANCE
-------------------------------------------------------------
-R2 Score : 0.9472
-Train Score               : 0.9499
-Test Score                : 0.9472
-============================================================
-# Project Workflow
-
-```text
-Raw Dataset
-    ↓
-Date Feature Engineering
-    ↓
-Leakage Removal
-    ↓
-One-Hot Encoding
-    ↓
-Train-Test Split
-    ↓
-XGBoost Training
-    ↓
-Prediction
-    ↓
-Evaluation
-```
-
----
-
-# Technologies Used
-
-* Python
-* Pandas
-* NumPy
-* Scikit-Learn
-* XGBoost
-
----
-
-# Future Improvements
-
-* Hyperparameter tuning using GridSearchCV
-* Cross-validation
-* Feature importance analysis
-* SHAP Explainability
-* Demand forecasting dashboard
-* Real-time prediction API using FastAPI
-* Docker deployment
-* MLflow experiment tracking
-* Airflow pipeline automation
-
----
-
-# Author
-
-Tanishq Panchal
-
-Machine Learning Engineer Portfolio Project
-
-Smart Mobility Demand Prediction
+*Developed as part of an ML Portfolio / Internship project.*
