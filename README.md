@@ -1,4 +1,4 @@
-# Smart Ride AI Dashboard 🚕
+# Smart Ride Dashboard 🚕
 
 An interactive Machine Learning web application and operational forecasting tool for smart mobility and taxi fleet management. This project utilizes historical ride data and an XGBoost prediction engine to forecast taxi demand, recommend dynamic surge pricing, and intelligently allocate vehicle fleet mixes across different zones in Dubai.
 
